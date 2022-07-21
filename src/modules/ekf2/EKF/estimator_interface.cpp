@@ -468,6 +468,10 @@ bool EstimatorInterface::initialise_interface(uint64_t timestamp)
 		max_time_delay_ms = math::max(_params.ev_delay_ms, max_time_delay_ms);
 	}
 
+	if (_params.forced_delay_ms > FLT_EPSILON) {
+		max_time_delay_ms = math::max(_params.forced_delay_ms, max_time_delay_ms);
+	}
+
 	const float filter_update_period_ms = _params.filter_update_interval_us / 1000.f;
 
 	// calculate the IMU buffer length required to accomodate the maximum delay with some allowance for jitter

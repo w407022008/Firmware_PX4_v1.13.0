@@ -62,6 +62,7 @@ set(msg_files
 	commander_state.msg
 	control_allocator_status.msg
 	cpuload.msg
+	data_record.msg
 	differential_pressure.msg
 	distance_sensor.msg
 	ekf2_timestamps.msg
@@ -209,6 +210,7 @@ set(msg_files
 	vtol_vehicle_status.msg
 	wheel_encoders.msg
 	wind.msg
+	windspeed.msg
 	yaw_estimator_status.msg
 )
 

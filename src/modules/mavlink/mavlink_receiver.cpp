@@ -1396,7 +1396,20 @@ MavlinkReceiver::handle_message_odometry(mavlink_message_t *msg)
 	 * local NED frame. The angular velocity needs to be expressed in the
 	 * body (fcu_frd) frame.
 	 */
-	if (odom.child_frame_id == MAV_FRAME_BODY_FRD) {
+	if (true) { // custom default
+
+		odometry.velocity_frame = vehicle_odometry_s::LOCAL_FRAME_FRD;
+		odometry.vx = odom.vx;
+		odometry.vy = odom.vy;
+		odometry.vz = odom.vz;
+
+		odometry.rollspeed = NAN;
+		odometry.pitchspeed = NAN;
+		odometry.yawspeed = NAN;
+
+		odometry.velocity_covariance[0] = NAN;
+
+	} else if (odom.child_frame_id == MAV_FRAME_BODY_FRD) {
 
 		odometry.velocity_frame = vehicle_odometry_s::BODY_FRAME_FRD;
 		odometry.vx = odom.vx;
@@ -1428,12 +1441,12 @@ MavlinkReceiver::handle_message_odometry(mavlink_message_t *msg)
 	 */
 	if (odom.frame_id == MAV_FRAME_LOCAL_NED || odom.frame_id == MAV_FRAME_LOCAL_FRD) {
 
-		if (odom.frame_id == MAV_FRAME_LOCAL_NED) {
+//		if (odom.frame_id == MAV_FRAME_LOCAL_NED) {
 			odometry.local_frame = vehicle_odometry_s::LOCAL_FRAME_NED;
 
-		} else {
-			odometry.local_frame = vehicle_odometry_s::LOCAL_FRAME_FRD;
-		}
+//		} else {
+//			odometry.local_frame = vehicle_odometry_s::LOCAL_FRAME_FRD;
+//		}
 
 		if ((odom.estimator_type == MAV_ESTIMATOR_TYPE_VISION)
 		    || (odom.estimator_type == MAV_ESTIMATOR_TYPE_VIO)

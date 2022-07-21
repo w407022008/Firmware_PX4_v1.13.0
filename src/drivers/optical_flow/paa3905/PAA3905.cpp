@@ -574,6 +574,7 @@ void PAA3905::RunImpl()
 		report.device_id = get_device_id();
 
 		report.integration_timespan_us = _scheduled_interval_us;
+		report.device_id = 105;
 		report.quality = buf.data.SQUAL;
 
 		// set specs according to datasheet

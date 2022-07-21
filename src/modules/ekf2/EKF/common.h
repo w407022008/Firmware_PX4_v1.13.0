@@ -199,6 +199,7 @@ struct flowSample {
 	Vector3f    gyro_xyz{};    ///< measured delta angle of the inertial frame about the body axes obtained from rate gyro measurements (rad), RH rotation is positive
 	float       dt{};          ///< amount of integration time (sec)
 	uint8_t     quality{};     ///< quality indicator between 0 and 255
+	uint8_t     sensor_id;  ///< sensor id between 0 and 255
 };
 
 struct extVisionSample {
@@ -248,6 +249,7 @@ struct parameters {
 	int32_t sensor_interval_max_ms{10};     ///< maximum time of arrival difference between non IMU sensor updates. Sets the size of the observation buffers. (mSec)
 
 	// measurement time delays
+	float forced_delay_ms{0.0f};		///< forced minimum observation delay relative to the IMU (mSec)
 	float mag_delay_ms{0.0f};               ///< magnetometer measurement delay relative to the IMU (mSec)
 	float baro_delay_ms{0.0f};              ///< barometer height measurement delay relative to the IMU (mSec)
 	float gps_delay_ms{110.0f};             ///< GPS measurement delay relative to the IMU (mSec)

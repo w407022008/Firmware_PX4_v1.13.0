@@ -420,8 +420,6 @@ private:
 	uint64_t _time_last_zero_velocity_fuse{0}; ///< last time of zero velocity update (uSec)
 	uint64_t _time_last_gps_yaw_fuse{0};	///< time the last fusion of GPS yaw measurements were performed (uSec)
 	uint64_t _time_last_gps_yaw_data{0};	///< time the last GPS yaw measurement was available (uSec)
-	uint64_t _time_last_mag_heading_fuse{0};
-	uint64_t _time_last_mag_3d_fuse{0};
 	uint64_t _time_last_healthy_rng_data{0};
 	uint8_t _nb_gps_yaw_reset_available{0}; ///< remaining number of resets allowed before switching to another aiding source
 
@@ -449,6 +447,7 @@ private:
 	bool _mag_yaw_reset_req{false};		///< true when a reset of the yaw using the magnetometer data has been requested
 	bool _mag_decl_cov_reset{false};	///< true after the fuseDeclination() function has been used to modify the earth field covariances after a magnetic field reset event.
 	bool _synthetic_mag_z_active{false};	///< true if we are generating synthetic magnetometer Z measurements
+	bool _non_mag_yaw_aiding_running_prev{false};  ///< true when heading is being fused from other sources that are not the magnetometer (for example EV or GPS).
 	bool _is_yaw_fusion_inhibited{false};		///< true when yaw sensor use is being inhibited
 
 	SquareMatrix24f P{};	///< state covariance matrix
@@ -606,9 +605,9 @@ private:
 	void predictCovariance();
 
 	// ekf sequential fusion of magnetometer measurements
-	bool fuseMag(const Vector3f &mag, bool update_all_states = true);
+	void fuseMag(const Vector3f &mag);
 
-	// update quaternion states and covariances using an innovation, observation variance and Jacobian vector
+	// update quaternion states and covariances using a yaw innovation and yaw observation variance
 	// innovation : prediction - measurement
 	// variance : observaton variance
 	bool fuseYaw(const float innovation, const float variance);
@@ -622,7 +621,7 @@ private:
 
 	// fuse magnetometer declination measurement
 	// argument passed in is the declination uncertainty in radians
-	bool fuseDeclination(float decl_sigma);
+	void fuseDeclination(float decl_sigma);
 
 	// apply sensible limits to the declination and length of the NE mag field states estimates
 	void limitDeclination();
@@ -723,7 +722,7 @@ private:
 
 	// reset the heading and magnetic field states using the declination and magnetometer measurements
 	// return true if successful
-	bool resetMagHeading();
+	bool resetMagHeading(bool increase_yaw_var = true, bool update_buffer = true);
 
 	// reset the heading using the external vision measurements
 	// return true if successful
@@ -847,10 +846,14 @@ private:
 	// control fusion of magnetometer observations
 	void controlMagFusion();
 
+	bool noOtherYawAidingThanMag() const;
+	bool otherHeadingSourcesHaveStopped();
+
 	void checkHaglYawResetReq();
 	float getTerrainVPos() const { return isTerrainEstimateValid() ? _terrain_vpos : _last_on_ground_posD; }
 
 	void runOnGroundYawReset();
+	bool isYawResetAuthorized() const { return !_is_yaw_fusion_inhibited; }
 	bool canResetMagHeading() const;
 	void runInAirYawReset(const Vector3f &mag);
 
@@ -858,12 +861,15 @@ private:
 	void check3DMagFusionSuitability();
 	void checkYawAngleObservability();
 	void checkMagBiasObservability();
+	bool isYawAngleObservable() const { return _yaw_angle_observable; }
+	bool isMagBiasObservable() const { return _mag_bias_observable; }
 	bool canUse3DMagFusion() const;
 
 	void checkMagDeclRequired();
 	void checkMagInhibition();
 	bool shouldInhibitMag() const;
-	bool magFieldStrengthDisturbed(const Vector3f &mag) const;
+	void checkMagFieldStrength(const Vector3f &mag);
+	bool isStrongMagneticDisturbance() const { return _control_status.flags.mag_field_disturbed; }
 	static bool isMeasuredMatchingExpected(float measured, float expected, float gate);
 	void runMagAndMagDeclFusions(const Vector3f &mag);
 	void run3DMagAndDeclFusions(const Vector3f &mag);
@@ -1029,7 +1035,7 @@ private:
 	// yaw : Euler yaw angle (rad)
 	// yaw_variance : yaw error variance (rad^2)
 	// update_buffer : true if the state change should be also applied to the output observer buffer
-	void resetQuatStateYaw(float yaw, float yaw_variance, bool update_buffer = true);
+	void resetQuatStateYaw(float yaw, float yaw_variance, bool update_buffer);
 
 	// Declarations used to control use of the EKF-GSF yaw estimator
 
