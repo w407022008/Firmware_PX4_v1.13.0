@@ -70,9 +70,9 @@ void Ekf::fuseOptFlow()
 
 	// calculate the sensor position relative to the IMU
 	Vector3f offset;
-	if(_flow_sample_delayed.device_id == 103){
+	if(_flow_sample_delayed.sensor_id == 103){
 		offset = _params.flow_pos_body - _params.imu_pos_body;
-	}else if(_flow_sample_delayed.device_id == 101){
+	}else if(_flow_sample_delayed.sensor_id == 101){
 		Vector3f flow_pos_body{-_params.flow_pos_body(0),_params.flow_pos_body(1),_params.flow_pos_body(2)};
 		offset = flow_pos_body - _params.imu_pos_body;
 	}

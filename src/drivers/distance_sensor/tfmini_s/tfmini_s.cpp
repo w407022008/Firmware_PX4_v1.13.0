@@ -85,13 +85,13 @@ class tfmini_s : public device::I2C, public I2CSPIDriver<tfmini_s>
 public:
 	tfmini_s(const I2CSPIDriverConfig &config);
 	~tfmini_s() override;
-	
+
 	static void print_usage();
 
 	virtual int init() override;
 
 	void print_status() override;
-	
+
 	/**
 	 * Perform a poll cycle; collect from the previous measurement
 	 * and start a new one.
@@ -130,7 +130,7 @@ private:
 	 * Collect the result of the most recent measurement.
 	 */
 	int collect(uint8_t id);
-	
+
 	PX4Rangefinder _px4_rangefinder;
 
 	perf_counter_t _comms_errors{perf_alloc(PC_COUNT, MODULE_NAME": comm_err")};
@@ -297,7 +297,7 @@ int tfmini_s::collect(uint8_t id)
 	uint8_t signal_quality = 100 * strength / 65535.0f;
 
 	// Step 2: Filter physically impossible measurements, which removes some crazy outliers that appear on LL40LS.
-        if (fabs(distance_m - last_dist_m) < 0.2 || (strength < 0))
+        if (fabs(distance_m - last_dist_m) > 0.2 || (strength < 0))
                  signal_quality = 0;
         last_dist_m = distance_m;
 

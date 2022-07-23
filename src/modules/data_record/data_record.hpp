@@ -98,7 +98,7 @@ private:
 	// Subscriptions
 //    uORB::Subscription	_parameter_update_sub{ORB_ID(parameter_update)};
 //	uORB::Subscription 	_actuator_controls_sub{ORB_ID(actuator_controls_0)};
-	uORB::Subscription 	_actuator_outputs_sub{ORB_ID(actuator_outputs),1};
+	uORB::Subscription 	_actuator_outputs_sub{ORB_ID(actuator_outputs),3};
 	// uORB::Subscription 	_vehicle_acceleration_sub{ORB_ID(vehicle_acceleration)};
 	// uORB::Subscription 	_vehicle_rate_sub{ORB_ID(vehicle_angular_velocity)};
     uORB::Subscription 	_vehicle_sensor_combined_sub{ORB_ID(sensor_combined)};
