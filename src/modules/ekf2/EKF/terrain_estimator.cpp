@@ -328,14 +328,7 @@ void Ekf::fuseFlowForTerrain()
 	const Dcmf earth_to_body = quatToInverseRotMat(_state.quat_nominal);
 
 	// calculate the sensor position relative to the IMU
-	Vector3f offset;
-	if(_flow_sample_delayed.sensor_id == 103){
-		offset = _params.flow_pos_body - _params.imu_pos_body;
-	}else if(_flow_sample_delayed.sensor_id == 101){
-		Vector3f flow_pos_body{-_params.flow_pos_body(0),_params.flow_pos_body(1),_params.flow_pos_body(2)};
-		offset = flow_pos_body - _params.imu_pos_body;
-	}
-	const Vector3f pos_offset_body = offset;
+	const Vector3f pos_offset_body = _params.flow_pos_body - _params.imu_pos_body;
 
 	// calculate the velocity of the sensor relative to the imu in body frame
 	// Note: _flow_sample_delayed.gyro_xyz is the negative of the body angular velocity, thus use minus sign
