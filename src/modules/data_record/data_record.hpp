@@ -95,21 +95,21 @@ private:
 //        (ParamFloat<px4::params::MC_ROLL_P>) _param_mc_roll_p
 //	)
 
-	// Subscriptions
+    // Subscriptions
 //    uORB::Subscription	_parameter_update_sub{ORB_ID(parameter_update)};
 //	uORB::Subscription 	_actuator_controls_sub{ORB_ID(actuator_controls_0)};
-	uORB::Subscription 	_actuator_outputs_sub{ORB_ID(actuator_outputs),3};
-	// uORB::Subscription 	_vehicle_acceleration_sub{ORB_ID(vehicle_acceleration)};
-	// uORB::Subscription 	_vehicle_rate_sub{ORB_ID(vehicle_angular_velocity)};
-    uORB::Subscription 	_vehicle_sensor_combined_sub{ORB_ID(sensor_combined)};
+    uORB::Subscription 	_actuator_outputs_sub{ORB_ID(actuator_outputs),1}; // 800hz defined by IMU_GYRO_RATEMAX
+    // uORB::Subscription 	_vehicle_acceleration_sub{ORB_ID(vehicle_acceleration)};
+    // uORB::Subscription 	_vehicle_rate_sub{ORB_ID(vehicle_angular_velocity)};
+    uORB::Subscription 	_vehicle_sensor_combined_sub{ORB_ID(sensor_combined)}; // 200hz defined by IMU_INTEG_RATE
 //     uORB::Subscription 	_jy901b_msg_sub{ORB_ID(jy901b_msg)};
-    uORB::Subscription 	_vehicle_attitude_sub{ORB_ID(vehicle_attitude)};
+    uORB::Subscription 	_vehicle_attitude_sub{ORB_ID(vehicle_attitude)}; // 200hz
 //    uORB::Subscription 	_ev_odom_sub{ORB_ID(vehicle_visual_odometry)};
-    uORB::Subscription 	_vehicle_local_sub{ORB_ID(vehicle_local_position)};
-    uORB::Subscription 	_sensor_baro_sub{ORB_ID(sensor_baro)};
-    uORB::Subscription 	_windspeed_sub{ORB_ID(windspeed)};
-    uORB::Subscription 	_battery_sub{ORB_ID(battery_status)};
-    uORB::Subscription 	_data_record_sub{ORB_ID(data_record)};
+    uORB::Subscription 	_vehicle_local_sub{ORB_ID(vehicle_local_position)}; // 100hz
+    uORB::Subscription 	_sensor_baro_sub{ORB_ID(sensor_baro)}; // 150hz defined by SENS_BARO_RATE
+    uORB::Subscription 	_windspeed_sub{ORB_ID(windspeed)}; // 400hz
+    uORB::Subscription 	_battery_sub{ORB_ID(battery_status)}; //
+    uORB::Subscription 	_data_record_sub{ORB_ID(data_record)}; //400hz
 //    uORB::Subscription _estimator_sensor_bias_sub{ORB_ID(estimator_sensor_bias)};
 
 	// Publications
