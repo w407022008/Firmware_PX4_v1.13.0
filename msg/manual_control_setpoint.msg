@@ -44,6 +44,8 @@ float32 r			 # yaw stick/twist position, -1..1
 
 float32 flaps			 # flap position
 
+uint16 buttons
+
 float32 aux1
 float32 aux2
 float32 aux3

@@ -72,6 +72,7 @@ private:
 			msg.y = manual_control_setpoint.y * 1000;
 			msg.z = manual_control_setpoint.z * 1000;
 			msg.r = manual_control_setpoint.r * 1000;
+			msg.buttons = manual_control_setpoint.buttons;
 
 			manual_control_switches_s manual_control_switches{};
 
