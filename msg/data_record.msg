@@ -6,6 +6,15 @@ uint64 timestamp				# time since system start (microseconds)
 uint64 timestamp_sample_pwm			# timestamp of the data sample on which this message is based (microseconds)
 float32[4] output				# output data, in natural output units PWM
 
+uint64 timestamp_sample_mot			# timestamp of the data sample on which this message is based (microseconds)
+float32[4] motors				# range: [-1, 1], where 1 means maximum positive thrust, -1 maximum negative and NaN maps to disarmed
+
+uint64 timestamp_sample_tor			# timestamp of the data sample on which this message is based (microseconds)
+float32[3] torque          			# torque setpoint about X, Y, Z body axis (normalized)
+
+uint64 timestamp_sample_thr			# timestamp of the data sample on which this message is based (microseconds)
+float32[3] thrust          			# thrust setpoint along X, Y, Z body axis [-1, 1]
+
 uint64 timestamp_sample_imu			# timestamp of the data sample on which this message is based (microseconds)
 float32[3] vehicle_acceleration_xyz		# Bias corrected acceleration (including gravity) in body axis (in m/s^2)
 float32[3] vehicle_angular_velocity_xyz	# Bias corrected angular velocity about X, Y, Z body axis (in rad/s)

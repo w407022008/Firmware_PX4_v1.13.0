@@ -44,6 +44,9 @@
 //#include <uORB/topics/parameter_update.h>
 // #include <uORB/topics/actuator_controls.h>
 #include <uORB/topics/actuator_outputs.h>
+#include <uORB/topics/actuator_motors.h>
+#include <uORB/topics/vehicle_thrust_setpoint.h>
+#include <uORB/topics/vehicle_torque_setpoint.h>
 #include <uORB/topics/vehicle_attitude.h>
 // #include <uORB/topics/vehicle_angular_velocity.h>
 // #include <uORB/topics/vehicle_acceleration.h>
@@ -97,10 +100,15 @@ private:
 
     // Subscriptions
 //    uORB::Subscription	_parameter_update_sub{ORB_ID(parameter_update)};
+    /* actuator */
 //	uORB::Subscription 	_actuator_controls_sub{ORB_ID(actuator_controls_0)};
+    uORB::Subscription 	_actuator_motors_sub{ORB_ID(actuator_motors),1};
+    uORB::Subscription 	_vehicle_thrust_setpoint_sub{ORB_ID(vehicle_thrust_setpoint),1};
+    uORB::Subscription 	_vehicle_torque_setpoint_sub{ORB_ID(vehicle_torque_setpoint),1};
     uORB::Subscription 	_actuator_outputs_sub{ORB_ID(actuator_outputs),1}; // 800hz defined by IMU_GYRO_RATEMAX
+    /* flight state */
     // uORB::Subscription 	_vehicle_acceleration_sub{ORB_ID(vehicle_acceleration)};
-    // uORB::Subscription 	_vehicle_rate_sub{ORB_ID(vehicle_angular_velocity)};
+    // uORB::Subscription 	_vehicle_rate_sub{ORB_ID(vehicle_angular_velocity)}; // Lp filter
     uORB::Subscription 	_vehicle_sensor_combined_sub{ORB_ID(sensor_combined)}; // 200hz defined by IMU_INTEG_RATE
 //     uORB::Subscription 	_jy901b_msg_sub{ORB_ID(jy901b_msg)};
     uORB::Subscription 	_vehicle_attitude_sub{ORB_ID(vehicle_attitude)}; // 200hz

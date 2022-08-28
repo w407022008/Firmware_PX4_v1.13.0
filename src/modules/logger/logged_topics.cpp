@@ -341,7 +341,20 @@ void LoggedTopics::add_system_identification_topics()
 {
 	// for system id need to log imu and controls at full rate
 	add_topic("battery_status", 10);
-	add_topic("actuator_outputs",0,1);
+
+    // SYS_CTRL_ALLOC: additional dynamic control allocation logging when enabled
+    int32_t sys_ctrl_alloc = 0;
+    param_get(param_find("SYS_CTRL_ALLOC"), &sys_ctrl_alloc);
+    if (sys_ctrl_alloc >= 1) {
+        add_topic("actuator_motors");
+        //add_topic("actuator_servos", 100);
+        //add_topic("vehicle_angular_acceleration", 20);
+        add_topic_multi("vehicle_thrust_setpoint");
+        add_topic_multi("vehicle_torque_setpoint");
+    }else{
+        add_topic("actuator_outputs",0,1);
+    }
+
 	// add_topic("actuator_controls_1");
 	add_topic("sensor_combined"); // used in EKF
 	// add_topic("vehicle_acceleration", 5); // with lp_filter only used for land_detect and cal_routine
@@ -350,10 +363,10 @@ void LoggedTopics::add_system_identification_topics()
 	// add_topic("vehicle_torque_setpoint");
 
 	// add_topic_multi("vehicle_imu", 5, 2); // offset corrected and vibrMetr, used for sensor_combined
-	// add_topic_multi("sensor_accel"); // raw avg
-	// add_topic_multi("sensor_gyro"); // raw avg
-	add_topic("sensor_gyro_fifo"); // raw orig
-	add_topic("sensor_accel_fifo"); // raw orig
+//	add_topic_multi("sensor_accel"); // raw avg
+//	add_topic_multi("sensor_gyro"); // raw avg
+	add_topic_multi("sensor_gyro_fifo"); // raw orig
+	add_topic_multi("sensor_accel_fifo"); // raw orig
 	add_topic("sensor_baro"); // raw orig
 	add_topic("distance_sensor", 2);
 

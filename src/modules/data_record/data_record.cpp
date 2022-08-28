@@ -101,33 +101,48 @@ void DataRecord::Run()
 			report.output[i] = last_data.output[i];
 		}
 
+        report.timestamp_sample_mot = last_data.timestamp_sample_mot;
+        for(int i=0;i<4;i++){
+            report.motors[i] = last_data.motors[i];
+        }
+
+        report.timestamp_sample_thr = last_data.timestamp_sample_thr;
+        for(int i=0;i<3;i++){
+            report.thrust[i] = last_data.thrust[i];
+        }
+
+        report.timestamp_sample_tor = last_data.timestamp_sample_tor;
+        for(int i=0;i<3;i++){
+            report.torque[i] = last_data.output[i];
+        }
+
 		report.timestamp_sample_att = last_data.timestamp_sample_att;
                 for(int i=0;i<3;i++){
                         report.vehicle_attitude_ned[i] = last_data.vehicle_attitude_ned[i];
 		}
 
-                report.timestamp_sample_imu = last_data.timestamp_sample_imu;
-                for(int i=0;i<3;i++){
-                        report.vehicle_angular_velocity_xyz[i] = last_data.vehicle_angular_velocity_xyz[i];
-                        report.vehicle_acceleration_xyz[i] = last_data.vehicle_acceleration_xyz[i];
-                }
+        report.timestamp_sample_imu = last_data.timestamp_sample_imu;
+        for(int i=0;i<3;i++){
+                report.vehicle_angular_velocity_xyz[i] = last_data.vehicle_angular_velocity_xyz[i];
+                report.vehicle_acceleration_xyz[i] = last_data.vehicle_acceleration_xyz[i];
+        }
 
-                // report.timestamp_sample_jy901b = last_data.timestamp_sample_jy901b;
-                // for(int i=0;i<3;i++){
-                //         report.jy901b_acc[i] = last_data.jy901b_acc[i];
-                //         report.jy901b_gyro[i] = last_data.jy901b_gyro[i];
-                //         report.jy901b_euler[i] = last_data.jy901b_euler[i];
-                //         report.jy901b_q[i] = last_data.jy901b_q[i];
-                // }
+        // report.timestamp_sample_jy901b = last_data.timestamp_sample_jy901b;
+        // for(int i=0;i<3;i++){
+        //         report.jy901b_acc[i] = last_data.jy901b_acc[i];
+        //         report.jy901b_gyro[i] = last_data.jy901b_gyro[i];
+        //         report.jy901b_euler[i] = last_data.jy901b_euler[i];
+        //         report.jy901b_q[i] = last_data.jy901b_q[i];
+        // }
 		// report.jy901b_q[3] = last_data.jy901b_q[3];
 		// report.jy901b_baro = last_data.jy901b_baro;
 		// report.jy901b_temp = last_data.jy901b_temp;
 
-                // report.timestamp_sample_bias = last_data.timestamp_sample_bias;
-                // for(int i=0;i<3;i++){
-                //         report.gyro_bias[i] = last_data.gyro_bias[i];
-                //         report.accel_bias[i] = last_data.accel_bias[i];
-                // }
+        // report.timestamp_sample_bias = last_data.timestamp_sample_bias;
+        // for(int i=0;i<3;i++){
+        //         report.gyro_bias[i] = last_data.gyro_bias[i];
+        //         report.accel_bias[i] = last_data.accel_bias[i];
+        // }
 
 //                report.timestamp_sample_external_vision =  last_data.timestamp_sample_external_vision;
 //                report.external_vision_position_ned[0] = last_data.external_vision_position_ned[0];
@@ -135,31 +150,31 @@ void DataRecord::Run()
 //                report.external_vision_position_ned[2] = last_data.external_vision_position_ned[2];
 
 		report.timestamp_sample_ground_truth = last_data.timestamp_sample_ground_truth;
-                report.ground_truth_acceleration_ned[0] = last_data.ground_truth_acceleration_ned[0];
-                report.ground_truth_acceleration_ned[1] = last_data.ground_truth_acceleration_ned[1];
-                report.ground_truth_acceleration_ned[2] = last_data.ground_truth_acceleration_ned[2];
-                report.ground_truth_acceleration_xyz[0] = last_data.ground_truth_acceleration_xyz[0];
-                report.ground_truth_acceleration_xyz[1] = last_data.ground_truth_acceleration_xyz[1];
-                report.ground_truth_acceleration_xyz[2] = last_data.ground_truth_acceleration_xyz[2];
-                report.ground_truth_position_ned[0] = last_data.ground_truth_position_ned[0];
-                report.ground_truth_position_ned[1] = last_data.ground_truth_position_ned[1];
-                report.ground_truth_position_ned[2] = last_data.ground_truth_position_ned[2];
-                report.ground_truth_velocity_ned[0] = last_data.ground_truth_velocity_ned[0];
-                report.ground_truth_velocity_ned[1] = last_data.ground_truth_velocity_ned[1];
-                report.ground_truth_velocity_ned[2] = last_data.ground_truth_velocity_ned[2];
-                report.ground_truth_velocity_xyz[0] = last_data.ground_truth_velocity_xyz[0];
-                report.ground_truth_velocity_xyz[1] = last_data.ground_truth_velocity_xyz[1];
-                report.ground_truth_velocity_xyz[2] = last_data.ground_truth_velocity_xyz[2];
+        report.ground_truth_acceleration_ned[0] = last_data.ground_truth_acceleration_ned[0];
+        report.ground_truth_acceleration_ned[1] = last_data.ground_truth_acceleration_ned[1];
+        report.ground_truth_acceleration_ned[2] = last_data.ground_truth_acceleration_ned[2];
+        report.ground_truth_acceleration_xyz[0] = last_data.ground_truth_acceleration_xyz[0];
+        report.ground_truth_acceleration_xyz[1] = last_data.ground_truth_acceleration_xyz[1];
+        report.ground_truth_acceleration_xyz[2] = last_data.ground_truth_acceleration_xyz[2];
+        report.ground_truth_position_ned[0] = last_data.ground_truth_position_ned[0];
+        report.ground_truth_position_ned[1] = last_data.ground_truth_position_ned[1];
+        report.ground_truth_position_ned[2] = last_data.ground_truth_position_ned[2];
+        report.ground_truth_velocity_ned[0] = last_data.ground_truth_velocity_ned[0];
+        report.ground_truth_velocity_ned[1] = last_data.ground_truth_velocity_ned[1];
+        report.ground_truth_velocity_ned[2] = last_data.ground_truth_velocity_ned[2];
+        report.ground_truth_velocity_xyz[0] = last_data.ground_truth_velocity_xyz[0];
+        report.ground_truth_velocity_xyz[1] = last_data.ground_truth_velocity_xyz[1];
+        report.ground_truth_velocity_xyz[2] = last_data.ground_truth_velocity_xyz[2];
 
-                report.timestamp_sample_baro = last_data.timestamp_sample_baro;
-                report.pressure = last_data.pressure;
-                report.temperature = last_data.temperature;
+        report.timestamp_sample_baro = last_data.timestamp_sample_baro;
+        report.pressure = last_data.pressure;
+        report.temperature = last_data.temperature;
 
 		report.timestamp_sample_wind = last_data.timestamp_sample_wind;
 		report.windspeed_x = last_data.windspeed_x;
 		report.windspeed_y = last_data.windspeed_y;
-                report.windspeed_z = last_data.windspeed_z;
-                report.windspeed_zs = last_data.windspeed_zs;
+        report.windspeed_z = last_data.windspeed_z;
+        report.windspeed_zs = last_data.windspeed_zs;
 
 		report.timestamp_sample_bat = last_data.timestamp_sample_bat;
 		report.battery_scale = last_data.battery_scale;
@@ -252,6 +267,33 @@ void DataRecord::Run()
                 report.timestamp_sample_pwm = actuator_outputs.timestamp;
                 for(int i=0;i<4;i++){
                         report.output[i] = actuator_outputs.output[i];
+                }
+        }
+
+        if (_actuator_motors_sub.updated()){
+                actuator_motors_s actuator_motors;
+                _actuator_motors_sub.update(&actuator_motors);
+                report.timestamp_sample_mot = actuator_motors.timestamp;
+                for(int i=0;i<4;i++){
+                        report.motors[i] = actuator_motors.control[i];
+                }
+        }
+
+        if (_vehicle_thrust_setpoint_sub.updated()){
+                vehicle_thrust_setpoint_s vehicle_thrust_setpoint;
+                _vehicle_thrust_setpoint_sub.update(&vehicle_thrust_setpoint);
+                report.timestamp_sample_thr = vehicle_thrust_setpoint.timestamp;
+                for(int i=0;i<3;i++){
+                        report.thrust[i] = vehicle_thrust_setpoint.xyz[i];
+                }
+        }
+
+        if (_vehicle_torque_setpoint_sub.updated()){
+                vehicle_torque_setpoint_s vehicle_torque_setpoint;
+                _vehicle_torque_setpoint_sub.update(&vehicle_torque_setpoint);
+                report.timestamp_sample_tor = vehicle_torque_setpoint.timestamp;
+                for(int i=0;i<3;i++){
+                        report.torque[i] = vehicle_torque_setpoint.xyz[i];
                 }
         }
 
